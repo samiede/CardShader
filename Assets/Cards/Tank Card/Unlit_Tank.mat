@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Unlit_CardUnlitShader
+  m_Name: Unlit_Tank
   m_Shader: {fileID: 4800000, guid: 8d3c89c0a10fe4a47b90428514a2f248, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -20,11 +20,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BackgroundTex:
-        m_Texture: {fileID: 2800000, guid: 87ae4971e9c2b46febad0b6a4b95a904, type: 3}
+        m_Texture: {fileID: 2800000, guid: f71db968cb5374cffa2c6fdd537572f9, type: 3}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Offset: {x: 0, y: 0.33}
     - _DistortedTex:
-        m_Texture: {fileID: 2800000, guid: 21fa6c2dd9bf9464f8718a42c38122f8, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8dc8851ddcdb54232819b4c7d750982a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DistortionMap:
@@ -32,7 +32,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DistortionMask:
-        m_Texture: {fileID: 2800000, guid: 35a5b8d96a57c4cc381715284bbe11a7, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6f0a19a81818248c0a04dde3f62d57cf, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -40,22 +40,41 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ScrollingTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 476dd7f1663e5409ba4aa0f2394dc920, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SineTex:
-        m_Texture: {fileID: 2800000, guid: 9481b5dfa62fd467ba0de4058fdd4b72, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6a3e582f3cf8944ecbcd9f61ea382a4c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SubjectTex:
-        m_Texture: {fileID: 2800000, guid: 5c17073a3df344f69b40bd4d5715787c, type: 3}
+        m_Texture: {fileID: 2800000, guid: beef790c7d9e9444fbd7f8d396882e1a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _DistortedParallax: 0.2
+    - _H: 0
+    - _ImageAspectRatio: 1.5
+    - _ModelAspectRatio: 1
+    - _Parallax: 1.41
+    - _ScrollingParallax: 0
     - _SineAmplitude: 0.01
+    - _SineParallax: 0.05
     - _SineSpeed: 3
+    - _SubjectMasksDistorted: 0
+    - _SubjectMasksScrolling: 0
+    - _SubjectMasksSine: 1
+    - _SubjectParallax: 0.2
+    - _isToggled: 0
+    - _parallaxTranslation: 1
+    - _parallaxWithTranslation: 0
+    - _subjectMasksDistorted: 0
+    - _subjectMasksScrolling: 0
+    - _subjectMasksSine: 1
     m_Colors:
-    - _DistortionSpeed: {r: 1.78, g: 1, b: 0, a: 0}
-    - _DistortionStrength: {r: 0, g: 0.1, b: 0, a: 0}
+    - _DistortionSpeed: {r: 1, g: 1, b: 0, a: 0}
+    - _DistortionStrength: {r: 0, g: 0.12, b: 0, a: 0}
+    - _ScrollingDirection: {r: 5.32, g: 0, b: 0, a: 0}
+    - _ScrollingSpeed: {r: 1.58, g: -1.13, b: 0, a: 0}
   m_BuildTextureStacks: []
