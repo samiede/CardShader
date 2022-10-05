@@ -65,7 +65,7 @@ Material:
     - _SubjectMasksDistorted: 0
     - _SubjectMasksScrolling: 0
     - _SubjectMasksSine: 1
-    - _SubjectParallax: 0.2
+    - _SubjectParallax: 0.08
     - _isToggled: 0
     - _parallaxTranslation: 1
     - _parallaxWithTranslation: 0
