@@ -40,11 +40,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ScrollingTex:
-        m_Texture: {fileID: 2800000, guid: 476dd7f1663e5409ba4aa0f2394dc920, type: 3}
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SineOffsetTex:
+        m_Texture: {fileID: 2800000, guid: a1c78721aadd148df9d64878201c5807, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SineTex:
-        m_Texture: {fileID: 2800000, guid: 6a3e582f3cf8944ecbcd9f61ea382a4c, type: 3}
+        m_Texture: {fileID: 2800000, guid: b580c011f2c8544d4a5854ccc381034c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SubjectTex:
@@ -53,17 +57,20 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DistortedParallax: 0.2
+    - _DistortedParallax: 0.08
     - _H: 0
     - _ImageAspectRatio: 1.5
     - _ModelAspectRatio: 1
+    - _OffsetDistortedWithSine: 0
+    - _OffsetSineByMask: 1
     - _Parallax: 1.41
     - _ScrollingParallax: 0
-    - _SineAmplitude: 0.01
-    - _SineParallax: 0.05
-    - _SineSpeed: 3
+    - _SineAmplitude: 0.02
+    - _SineOffset: 0
+    - _SineParallax: 0.08
+    - _SineSpeed: 2
     - _SubjectMasksDistorted: 0
-    - _SubjectMasksScrolling: 0
+    - _SubjectMasksScrolling: 1
     - _SubjectMasksSine: 1
     - _SubjectParallax: 0.08
     - _isToggled: 0
@@ -73,8 +80,8 @@ Material:
     - _subjectMasksScrolling: 0
     - _subjectMasksSine: 1
     m_Colors:
-    - _DistortionSpeed: {r: 1, g: 1, b: 0, a: 0}
-    - _DistortionStrength: {r: 0, g: 0.12, b: 0, a: 0}
+    - _DistortionSpeed: {r: 1.39, g: 1, b: 0, a: 0}
+    - _DistortionStrength: {r: 0.12, g: 0, b: 0, a: 0}
     - _ScrollingDirection: {r: 5.32, g: 0, b: 0, a: 0}
     - _ScrollingSpeed: {r: 1.58, g: -1.13, b: 0, a: 0}
   m_BuildTextureStacks: []
