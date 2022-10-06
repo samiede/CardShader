@@ -20,11 +20,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BackgroundTex:
-        m_Texture: {fileID: 2800000, guid: 3894f328cf5ef4b2485b8aef04838e54, type: 3}
+        m_Texture: {fileID: 2800000, guid: cb784ac9dc6674db387e167fcd2946cd, type: 3}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0.31}
+        m_Offset: {x: 0, y: 0.3}
     - _DistortedTex:
-        m_Texture: {fileID: 2800000, guid: 40e93fbe4cc8049c09b13ff8d53290a3, type: 3}
+        m_Texture: {fileID: 2800000, guid: 31fdcb0dbefab44e59aa5416f5c70b07, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DistortionMap:
@@ -32,11 +32,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DistortionMask:
-        m_Texture: {fileID: 2800000, guid: 04752afba40e341669b49b4af7a79df5, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FlowmapTex:
-        m_Texture: {fileID: 2800000, guid: 82529f1eccd3145e8911f1f0d06a3381, type: 3}
+        m_Texture: {fileID: 2800000, guid: de86713274ea8487d8500d22fa0b1734, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ScrollingTex:
@@ -48,34 +48,40 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SineTex:
-        m_Texture: {fileID: 2800000, guid: c13c6af7bb86b4123ad74766cc6a4495, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SubjectTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: fd0a9849d30c2433f9b15be5fcc6e1d6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _DistortedParallax: 0.1
     - _FlowMapSpeed: 0
+    - _FlowMapStrength: 0
+    - _FlowMapTiling: 1
+    - _FlowOffset: 0
     - _FlowmapStrength: 0
     - _ImageAspectRatio: 1.5
     - _ModelAspectRatio: 1
-    - _OffsetDistortedWithSine: 1
+    - _OffsetDistortedWithSine: 0
     - _OffsetSineByMask: 0
     - _ScrollingParallax: 0
     - _SineAmplitude: 0.02
-    - _SineParallax: 0.1
+    - _SineParallax: 0
     - _SineSpeed: 1
-    - _SubjectMasksDistorted: 0
+    - _SubjectMasksDistorted: 1
     - _SubjectMasksScrolling: 0
     - _SubjectMasksSine: 0
-    - _SubjectParallax: 0
-    - _UsePolarCoordinatesForDistortion: 0
+    - _SubjectParallax: 0.18
+    - _UJump: 0.162
+    - _UseFlowMapForDistortion: 0
+    - _UsePolarCoordinatesForDistortion: 1
+    - _VJump: 0.16
     - _parallaxWithTranslation: 0
     m_Colors:
-    - _DistortionSpeed: {r: 3.09, g: 4.08, b: 0, a: 0}
-    - _DistortionStrength: {r: 0.2, g: 0.27, b: 0, a: 0}
+    - _DistortionSpeed: {r: 0, g: 0.38, b: 0, a: 0}
+    - _DistortionStrength: {r: 0.05, g: -0.18, b: 0, a: 0}
     - _ScrollingSpeed: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

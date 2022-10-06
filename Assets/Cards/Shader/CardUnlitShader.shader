@@ -21,16 +21,20 @@ Shader "Unlit/CardUnlitShader"
         [NoScaleOffset]_DistortedTex ("Distorted Texture", 2D) = "black" {}
         [MaterialToggle] _SubjectMasksDistorted("Subject Masks Distorted", Float) = 0
         [MaterialToggle] _OffsetDistortedWithSine("Offset Distorted with Sine", Float) = 0
-        [MaterialToggle] _UsePolarCoordinatesForDistortion("Use Polar Coordinates For Distortion", Float) = 0
+        [MaterialToggle] _UseFlowMapForDistortion("Use Flow Map For Distortion", Float) = 0
         _DistortedParallax("Distorted Parallax", float) = 0
         [NoScaleOffset]_DistortionMap ("Distortion Map", 2D) = "black" {}
         [NoScaleOffset]_DistortionMask ("Distortion Mask", 2D) = "black" {}
         _DistortionStrength("Distortion Strength", Vector) = (1, 1, 0, 0)
         _DistortionSpeed("Distortion Speed", Vector) = (0, 0, 0, 0)
         [NoScaleOffset] _FlowmapTex ("Flowmap Texture", 2D) = "black" {}
-        _FlowmapStrength("Flowmap Strength", float) = 0
+        _UJump ("U jump per phase", Range(-0.25, 0.25)) = 0.25
+		_VJump ("V jump per phase", Range(-0.25, 0.25)) = 0.25
+        _FlowMapTiling ("Flow Map Tiling", Float) = 1
         _FlowMapSpeed("Flowmap Speed", float) = 0
-        
+        _FlowMapStrength("Flowmap Strength", float) = 0
+        _FlowOffset ("Flow Offset", Float) = 0
+
 
         [MaterialToggle] _parallaxWithTranslation("Parallax with Translation", Float) = 0
 
@@ -83,7 +87,8 @@ Shader "Unlit/CardUnlitShader"
             float4 _DistortionMap_ST;
             float2 _DistortionStrength, _DistortionSpeed;
             sampler2D _FlowmapTex;
-            float _FlowmapStrength, _FlowMapSpeed;
+            float _UJump, _VJump, _FlowMapTiling;
+            float _FlowMapStrength, _FlowMapSpeed, _FlowOffset;
 
             float _SineAmplitude;
             float _SineSpeed;
@@ -91,12 +96,11 @@ Shader "Unlit/CardUnlitShader"
             float _SubjectParallax, _SineParallax, _ScrollingParallax, _DistortedParallax, _parallaxWithTranslation;
 
             float2 _ScrollingSpeed;
-            float _OffsetDistortedWithSine, _UsePolarCoordinatesForDistortion;
+            float _OffsetDistortedWithSine, _UseFlowMapForDistortion;
+
 
             float2 toPolar(float2 cartesian){
-
-                cartesian -= 0.5;
-                cartesian *= 2;
+                
 	            float distance = length(cartesian);
 	            float angle = atan2(cartesian.y, cartesian.x);
 	            return float2(angle / UNITY_TWO_PI, distance);
@@ -108,6 +112,17 @@ Shader "Unlit/CardUnlitShader"
                 return cartesian * polar.y;
             }
 
+            float3 FlowUVW (float2 uv, float2 flowVector, float2 jump, float flowOffset, float tiling, float time, bool flowB) {
+	            float phaseOffset = flowB ? 0.5 : 0;
+	            float progress = frac(time + phaseOffset);
+	            float3 uvw;
+	            uvw.xy = uv - flowVector * (progress + flowOffset);
+                uvw.xy *= tiling;
+	            uvw.xy += phaseOffset;
+                uvw.xy += (time - progress) * jump;
+                uvw.z = 1 - abs(1 - 2 * progress);
+                return uvw;
+            }
             
             v2f vert (appdata v)
             {
@@ -149,14 +164,32 @@ Shader "Unlit/CardUnlitShader"
                 fixed4 scrolling = tex2D(_ScrollingTex, i.uv + scrollingParallaxOffset + scrollingTimeOffset);
 
                 const float2 distortedParallaxOffset = -i.viewDir * _DistortedParallax;
-                float distortionMask = 1 - tex2D(_DistortionMask, i.uv + distortedParallaxOffset).a;
-                float2 distortionOffset = float2(_DistortionSpeed.x * _Time.x, _DistortionSpeed.y * _Time.x);
 
-                // float2 flowmap = ((tex2D(_FlowmapTex, i.uv + float2(_Time.x, 0) * _FlowMapSpeed ) - 0.5) * 2).rg * _FlowmapStrength * distortionMask;
-                float2 distortedUVs = tex2D(_DistortionMap, i.uv + distortionOffset) * _DistortionStrength * distortionMask;
-                fixed4 distorted = tex2D(_DistortedTex, distortedUVs + i.uv + distortedParallaxOffset + step(0.5, _OffsetDistortedWithSine) * sineOffset);
-                // fixed4 distorted = tex2D(_DistortedTex, i.uv + step(0.5, _OffsetDistortedWithSine) * sineOffset + distortedParallaxOffset + flowmap);
+                fixed4 distorted;
+                if (_UseFlowMapForDistortion)
+                {
+                    float3 flowVectorAndAlpha = tex2D(_FlowmapTex, i.uv + distortedParallaxOffset).rga;
+                    float2 flowVector = flowVectorAndAlpha.xy * 2 - 1;
+                    flowVector *= _FlowMapStrength;
+                    float time = _Time.y * _FlowMapSpeed;
 
+                    float2 jump = float2(_UJump, _VJump);
+
+			        float3 uvwA = FlowUVW(i.uv, flowVector, jump, _FlowOffset, _FlowMapTiling, time, false);
+			        float3 uvwB = FlowUVW(i.uv, flowVector, jump, _FlowOffset, _FlowMapTiling, time, true);
+
+			        fixed4 texA = tex2D(_DistortedTex, uvwA.xy) * uvwA.z;
+			        fixed4 texB = tex2D(_DistortedTex, uvwB.xy) * uvwB.z;
+                    
+                    distorted = texA + texB;
+                } else
+                {
+                    float distortionMask = 1 - tex2D(_DistortionMask, i.uv + distortedParallaxOffset).a;
+                    float2 distortionOffset = float2(_DistortionSpeed.x * _Time.x, _DistortionSpeed.y * _Time.x);
+                
+                    float2 distortedUVs = tex2D(_DistortionMap, i.uv + distortionOffset) * _DistortionStrength * distortionMask;
+                    distorted = tex2D(_DistortedTex, distortedUVs + i.uv + distortedParallaxOffset + step(0.5, _OffsetDistortedWithSine) * sineOffset);
+                }
 
                 
                 fixed4 combined2 = bg * (1 - saturate(subject.a + sine.a + scrolling.a + distorted.a))
