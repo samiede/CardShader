@@ -22,6 +22,7 @@ Shader "Unlit/CardUnlitShader"
         [MaterialToggle] _SubjectMasksDistorted("Subject Masks Distorted", Float) = 0
         [MaterialToggle] _OffsetDistortedWithSine("Offset Distorted with Sine", Float) = 0
         [MaterialToggle] _UseFlowMapForDistortion("Use Flow Map For Distortion", Float) = 0
+        [MaterialToggle] _UsePolarCoordinatesForDistortion("Use Polar Coordinates For Distortion", Float) = 0
         _DistortedParallax("Distorted Parallax", float) = 0
         [NoScaleOffset]_DistortionMap ("Distortion Map", 2D) = "black" {}
         [NoScaleOffset]_DistortionMask ("Distortion Mask", 2D) = "black" {}
@@ -96,20 +97,19 @@ Shader "Unlit/CardUnlitShader"
             float _SubjectParallax, _SineParallax, _ScrollingParallax, _DistortedParallax, _parallaxWithTranslation;
 
             float2 _ScrollingSpeed;
-            float _OffsetDistortedWithSine, _UseFlowMapForDistortion;
+            float _OffsetDistortedWithSine, _UseFlowMapForDistortion, _UsePolarCoordinatesForDistortion;
 
 
             float2 toPolar(float2 cartesian){
                 
-	            float distance = length(cartesian);
-	            float angle = atan2(cartesian.y, cartesian.x);
-	            return float2(angle / UNITY_TWO_PI, distance);
+                return float2(atan2(cartesian.y, cartesian.x) / UNITY_PI / 2.0, length(cartesian));
+
             }
 
             float2 toCartesian(float2 polar){
-                float2 cartesian;
-                sincos(polar.x * UNITY_TWO_PI, cartesian.y, cartesian.x);
-                return cartesian * polar.y;
+
+                return float2(polar.y * cos(polar.x) * UNITY_PI * 2, polar.y * sin(polar.x) * UNITY_PI * 2);
+
             }
 
             float3 FlowUVW (float2 uv, float2 flowVector, float2 jump, float flowOffset, float tiling, float time, bool flowB) {
@@ -184,11 +184,24 @@ Shader "Unlit/CardUnlitShader"
                     distorted = texA + texB;
                 } else
                 {
-                    float distortionMask = 1 - tex2D(_DistortionMask, i.uv + distortedParallaxOffset).a;
-                    float2 distortionOffset = float2(_DistortionSpeed.x * _Time.x, _DistortionSpeed.y * _Time.x);
-                
-                    float2 distortedUVs = tex2D(_DistortionMap, i.uv + distortionOffset) * _DistortionStrength * distortionMask;
-                    distorted = tex2D(_DistortedTex, distortedUVs + i.uv + distortedParallaxOffset + step(0.5, _OffsetDistortedWithSine) * sineOffset);
+                    if (_UsePolarCoordinatesForDistortion)
+                    {
+                        float distortionMask = 1 - tex2D(_DistortionMask, i.uv + distortedParallaxOffset).a;
+                        
+                        float2 mappedUV = (i.uv * 2) - 1;
+                        float2 uvs = toPolar(mappedUV);
+                        uvs += (_Time.x)  * _DistortionSpeed;
+                        
+                        float2 distortedUVs = tex2D(_DistortionMap, uvs) * _DistortionStrength * distortionMask;
+                        distorted = tex2D(_DistortedTex, i.uv + distortedUVs + distortedParallaxOffset + + step(0.5, _OffsetDistortedWithSine) * sineOffset);
+
+                    } else
+                    {
+                        float distortionMask = 1 - tex2D(_DistortionMask, i.uv + distortedParallaxOffset).a;
+                        float2 distortionOffset = float2(_DistortionSpeed.x * _Time.x, _DistortionSpeed.y * _Time.x);
+                        float2 distortedUVs = tex2D(_DistortionMap, i.uv + distortionOffset) * _DistortionStrength * distortionMask;
+                        distorted = tex2D(_DistortedTex, distortedUVs + i.uv + distortedParallaxOffset + step(0.5, _OffsetDistortedWithSine) * sineOffset);
+                    }
                 }
 
                 
@@ -203,7 +216,7 @@ Shader "Unlit/CardUnlitShader"
                 
                 
                 // apply fog
-                // UNITY_APPLY_FOG(i.fogCoord, col);
+                UNITY_APPLY_FOG(i.fogCoord, col);
                 return combined2;
             }
             ENDCG

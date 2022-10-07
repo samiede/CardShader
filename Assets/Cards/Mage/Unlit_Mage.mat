@@ -81,7 +81,7 @@ Material:
     - _VJump: 0.16
     - _parallaxWithTranslation: 0
     m_Colors:
-    - _DistortionSpeed: {r: 0, g: 0.38, b: 0, a: 0}
+    - _DistortionSpeed: {r: 0, g: -0.66, b: 0, a: 0}
     - _DistortionStrength: {r: 0.05, g: -0.18, b: 0, a: 0}
     - _ScrollingSpeed: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
