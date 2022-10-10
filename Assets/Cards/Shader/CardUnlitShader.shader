@@ -5,8 +5,10 @@ Shader "Unlit/CardUnlitShader"
         _ImageAspectRatio("Image Aspect Ratio", float) = 1.5
         _ModelAspectRatio("Model Aspect Ratio", float) = 1.5
         _BackgroundTex ("Background Texture", 2D) = "black" {}
+        
         [NoScaleOffset]_SubjectTex ("Subject Texture", 2D) = "black" {}
         _SubjectParallax("Subject Parallax", float) = 0
+        
         [NoScaleOffset]_SineTex ("Sine Texture", 2D) = "black" {}
         [NoScaleOffset]_SineOffsetTex ("Sine Offset Texture", 2D) = "black" {}
         [MaterialToggle] _SubjectMasksSine("Subject Masks SineTex", Float) = 0
@@ -14,10 +16,13 @@ Shader "Unlit/CardUnlitShader"
         _SineAmplitude ("Amplitude", float) = 0
         _SineSpeed ("Speed", float) = 1
         [MaterialToggle] _OffsetSineByMask("Offset Sine by Mask", Float) = 0
+        
         [NoScaleOffset]_ScrollingTex ("Scrolling Texture", 2D) = "black" {}
         _ScrollingSpeed("Scrolling Speed", Vector) = (0, 0, 0, 0)
         [MaterialToggle] _SubjectMasksScrolling("Subject Masks ScrollingTex", Float) = 0
+        _ScrollingPulseInterval("Scrolling Pulse Interval", Float) = 1
         _ScrollingParallax("Scrolling Parallax", float) = 0
+        
         [NoScaleOffset]_DistortedTex ("Distorted Texture", 2D) = "black" {}
         [MaterialToggle] _SubjectMasksDistorted("Subject Masks Distorted", Float) = 0
         [MaterialToggle] _OffsetDistortedWithSine("Offset Distorted with Sine", Float) = 0
@@ -28,6 +33,9 @@ Shader "Unlit/CardUnlitShader"
         [NoScaleOffset]_DistortionMask ("Distortion Mask", 2D) = "black" {}
         _DistortionStrength("Distortion Strength", Vector) = (1, 1, 0, 0)
         _DistortionSpeed("Distortion Speed", Vector) = (0, 0, 0, 0)
+        _DistortionPulseInterval("Distortion Pulse Interval", Float) = 1
+
+        
         [NoScaleOffset] _FlowmapTex ("Flowmap Texture", 2D) = "black" {}
         _UJump ("U jump per phase", Range(-0.25, 0.25)) = 0.25
 		_VJump ("V jump per phase", Range(-0.25, 0.25)) = 0.25
@@ -79,14 +87,19 @@ Shader "Unlit/CardUnlitShader"
             sampler2D _SineTex;
             sampler2D _SineOffsetTex;
             float _SubjectMasksSine;
+
             sampler2D _ScrollingTex;
             float _SubjectMasksScrolling;
+            float _ScrollingPulseInterval;
+            
             sampler2D _DistortedTex;
             float _SubjectMasksDistorted;
             sampler2D _DistortionMap;
             sampler2D _DistortionMask;
             float4 _DistortionMap_ST;
             float2 _DistortionStrength, _DistortionSpeed;
+            float _DistortionPulseInterval;
+            
             sampler2D _FlowmapTex;
             float _UJump, _VJump, _FlowMapTiling;
             float _FlowMapStrength, _FlowMapSpeed, _FlowOffset;
@@ -151,6 +164,7 @@ Shader "Unlit/CardUnlitShader"
             fixed4 frag (v2f i) : SV_Target
             {
                 fixed4 bg = tex2D(_BackgroundTex, i.uv);
+
                 const float2 subjectParallaxOffset =  -i.viewDir * _SubjectParallax;
                 fixed4 subject = tex2D(_SubjectTex, i.uv + subjectParallaxOffset);
 
@@ -162,10 +176,17 @@ Shader "Unlit/CardUnlitShader"
                 const float2 scrollingParallaxOffset = -i.viewDir * _ScrollingParallax;
                 const float2 scrollingTimeOffset =  - _ScrollingSpeed * _Time.x;
                 fixed4 scrolling = tex2D(_ScrollingTex, i.uv + scrollingParallaxOffset + scrollingTimeOffset);
+                
+                if (_ScrollingPulseInterval > 0)
+                {
+                    scrolling.a *= 0.5 * sin((_ScrollingPulseInterval * _Time.y - 0.5) * UNITY_PI) + 0.5;
+                }
+                
 
                 const float2 distortedParallaxOffset = -i.viewDir * _DistortedParallax;
 
                 fixed4 distorted;
+                float2 distortedUVs;
                 if (_UseFlowMapForDistortion)
                 {
                     float3 flowVectorAndAlpha = tex2D(_FlowmapTex, i.uv + distortedParallaxOffset).rga;
@@ -192,16 +213,21 @@ Shader "Unlit/CardUnlitShader"
                         float2 uvs = toPolar(mappedUV);
                         uvs += (_Time.x)  * _DistortionSpeed;
                         
-                        float2 distortedUVs = tex2D(_DistortionMap, uvs) * _DistortionStrength * distortionMask;
+                        distortedUVs = (tex2D(_DistortionMap, uvs)  * _DistortionStrength * distortionMask - 0.5) * 2; 
                         distorted = tex2D(_DistortedTex, i.uv + distortedUVs + distortedParallaxOffset + + step(0.5, _OffsetDistortedWithSine) * sineOffset);
 
                     } else
                     {
                         float distortionMask = 1 - tex2D(_DistortionMask, i.uv + distortedParallaxOffset).a;
                         float2 distortionOffset = float2(_DistortionSpeed.x * _Time.x, _DistortionSpeed.y * _Time.x);
-                        float2 distortedUVs = tex2D(_DistortionMap, i.uv + distortionOffset) * _DistortionStrength * distortionMask;
-                        distorted = tex2D(_DistortedTex, distortedUVs + i.uv + distortedParallaxOffset + step(0.5, _OffsetDistortedWithSine) * sineOffset);
+                        distortedUVs = tex2D(_DistortionMap, i.uv + distortionOffset) * _DistortionStrength * distortionMask;
                     }
+                    distorted = tex2D(_DistortedTex, distortedUVs + i.uv + distortedParallaxOffset + step(0.5, _OffsetDistortedWithSine) * sineOffset);
+                    if (_DistortionPulseInterval > 0)
+                    {
+                        distorted.a *= 0.5 * sin((_DistortionPulseInterval * _Time.y - 0.5) * UNITY_PI) + 0.5;
+                    }
+                    
                 }
 
                 

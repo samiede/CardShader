@@ -123,6 +123,85 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &31335031
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 265942053199361212, guid: 5d951ccfbc95c4362ae9f1c4963cd019,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 265942053199361212, guid: 5d951ccfbc95c4362ae9f1c4963cd019,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.1390083
+      objectReference: {fileID: 0}
+    - target: {fileID: 265942053199361212, guid: 5d951ccfbc95c4362ae9f1c4963cd019,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.591
+      objectReference: {fileID: 0}
+    - target: {fileID: 265942053199361212, guid: 5d951ccfbc95c4362ae9f1c4963cd019,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.696905
+      objectReference: {fileID: 0}
+    - target: {fileID: 265942053199361212, guid: 5d951ccfbc95c4362ae9f1c4963cd019,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 265942053199361212, guid: 5d951ccfbc95c4362ae9f1c4963cd019,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 265942053199361212, guid: 5d951ccfbc95c4362ae9f1c4963cd019,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 265942053199361212, guid: 5d951ccfbc95c4362ae9f1c4963cd019,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 265942053199361212, guid: 5d951ccfbc95c4362ae9f1c4963cd019,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 265942053199361212, guid: 5d951ccfbc95c4362ae9f1c4963cd019,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 265942053199361212, guid: 5d951ccfbc95c4362ae9f1c4963cd019,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 265942053199361214, guid: 5d951ccfbc95c4362ae9f1c4963cd019,
+        type: 3}
+      propertyPath: m_Name
+      value: Default Card
+      objectReference: {fileID: 0}
+    - target: {fileID: 265942053236223435, guid: 5d951ccfbc95c4362ae9f1c4963cd019,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 265942053236223435, guid: 5d951ccfbc95c4362ae9f1c4963cd019,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 66aa3444364c84d7dad94bb8a6060415, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5d951ccfbc95c4362ae9f1c4963cd019, type: 3}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,103 +484,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &6007397152268196643
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3549666178120397813, guid: b2d4f230caa8a4e5ca974cded0112e88,
-        type: 3}
-      propertyPath: m_text
-      value: Poison Priest
-      objectReference: {fileID: 0}
-    - target: {fileID: 3549666179512978394, guid: b2d4f230caa8a4e5ca974cded0112e88,
-        type: 3}
-      propertyPath: m_text
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3549666179841810599, guid: b2d4f230caa8a4e5ca974cded0112e88,
-        type: 3}
-      propertyPath: m_text
-      value: 'Gas Discharge: Empty your tank to deal 2 damage to yourself and all
-        enemies around you.'
-      objectReference: {fileID: 0}
-    - target: {fileID: 3549666179843600674, guid: b2d4f230caa8a4e5ca974cded0112e88,
-        type: 3}
-      propertyPath: RotAngleY
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3549666179843600675, guid: b2d4f230caa8a4e5ca974cded0112e88,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3549666179843600675, guid: b2d4f230caa8a4e5ca974cded0112e88,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3549666179843600675, guid: b2d4f230caa8a4e5ca974cded0112e88,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3549666179843600675, guid: b2d4f230caa8a4e5ca974cded0112e88,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3549666179843600675, guid: b2d4f230caa8a4e5ca974cded0112e88,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3549666179843600675, guid: b2d4f230caa8a4e5ca974cded0112e88,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3549666179843600675, guid: b2d4f230caa8a4e5ca974cded0112e88,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3549666179843600675, guid: b2d4f230caa8a4e5ca974cded0112e88,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3549666179843600675, guid: b2d4f230caa8a4e5ca974cded0112e88,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3549666179843600675, guid: b2d4f230caa8a4e5ca974cded0112e88,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3549666179843600675, guid: b2d4f230caa8a4e5ca974cded0112e88,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3549666179843600701, guid: b2d4f230caa8a4e5ca974cded0112e88,
-        type: 3}
-      propertyPath: m_Name
-      value: Poison Priest
-      objectReference: {fileID: 0}
-    - target: {fileID: 3549666180147797676, guid: b2d4f230caa8a4e5ca974cded0112e88,
-        type: 3}
-      propertyPath: m_text
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3549666180147797676, guid: b2d4f230caa8a4e5ca974cded0112e88,
-        type: 3}
-      propertyPath: m_fontSize
-      value: 36
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b2d4f230caa8a4e5ca974cded0112e88, type: 3}
