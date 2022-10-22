@@ -28,7 +28,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DistortionMap:
-        m_Texture: {fileID: 2800000, guid: 76c78a440f1e645dda20e17a6ffb0aa3, type: 3}
+        m_Texture: {fileID: 2800000, guid: 47da65134e24742c18f64b003e161cff, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DistortionMask:
@@ -82,7 +82,7 @@ Material:
     - _VJump: 0.25
     - _parallaxWithTranslation: 0
     m_Colors:
-    - _DistortionSpeed: {r: 0, g: -0.55, b: 0, a: 0}
-    - _DistortionStrength: {r: 0, g: -0.18, b: 0, a: 0}
+    - _DistortionSpeed: {r: 0, g: -1.74, b: 0, a: 0}
+    - _DistortionStrength: {r: 0, g: -0.24, b: 0, a: 0}
     - _ScrollingSpeed: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
